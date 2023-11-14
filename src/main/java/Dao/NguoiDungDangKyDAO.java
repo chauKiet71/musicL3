@@ -4,7 +4,7 @@
  */
 package Dao;
 
-import entity.TaiKhoan;
+import entity.NguoiDung;
 import java.util.List;
 import uils.XJdpc;
 
@@ -12,17 +12,17 @@ import uils.XJdpc;
  *
  * @author PC
  */
-public class TaiKhoanDangKyDAO extends MusicDAO<TaiKhoan, String>{
-    String INSERT = "INSERT INTO TaiKhoan (TenTK, MatKhau, VaiTro, TrangThai) VALUES (?, ?, ?, ?)";
-    String SELECT_BY_ID = "SELECR * FROM TaiKhoan WWHERE TenTK = ?";
+public class NguoiDungDangKyDAO extends MusicDAO<NguoiDung, String>{
+    String INSERT = "INSERT INTO NguoiDung (HoTen, email, avatar, TenTK) VALUES (?, ?, ?, ?)";
+    String SELECT_BY_ID = "SELECT * FROM NguoiDung WHERE HoTen = ?";
 
     @Override
-    public void insert(TaiKhoan entity) {
-        XJdpc.update(INSERT, entity.getTenTk(), entity.getMatKhau(), entity.isVaiTro(), entity.getTrangThai());
+    public void insert(NguoiDung entity) {
+        XJdpc.update(INSERT, entity.getHoTen(), entity.getEmail(), entity.getAvatar(), entity.getTenTK());
     }
 
     @Override
-    public void update(TaiKhoan entity) {
+    public void update(NguoiDung entity) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -32,8 +32,8 @@ public class TaiKhoanDangKyDAO extends MusicDAO<TaiKhoan, String>{
     }
 
     @Override
-    public TaiKhoan selectById(String Key) {
-        List<TaiKhoan> list = this.selectBySql(SELECT_BY_ID, Key);
+    public NguoiDung selectById(String Key) {
+      List<NguoiDung> list = this.selectBySql(SELECT_BY_ID, Key);
         if (list.isEmpty()) {
             return null;
         }
@@ -41,13 +41,13 @@ public class TaiKhoanDangKyDAO extends MusicDAO<TaiKhoan, String>{
     }
 
     @Override
-    public List<TaiKhoan> selectAll() {
+    public List<NguoiDung> selectAll() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    protected List<TaiKhoan> selectBySql(String sql, Object... args) {
+    protected List<NguoiDung> selectBySql(String sql, Object... args) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
 }

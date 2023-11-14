@@ -39,24 +39,35 @@ public class LogIn extends javax.swing.JFrame {
         TaiKhoan tk = dao.selectById(tenTK);
         if (tk != null) {
             if (!matKhau.equals(tk.getMatKhau())) {
-                System.out.println("2222222");
                 msgBox.alertError(this, "Tên tài khoản hoặc mật khẩu không đúng");
             } else {
                 // Tạo một Timer để chuyển đến form chính sau 3 giây
-                    lbLoading.setVisible(true);
-                    Timer formTimer = new Timer(2000, event -> {
-                        // Chuyển đến form chính sau 3 giây
-                        Main mn = new Main();
-                        mn.setVisible(true);
-                        this.dispose();
-                    });
-                    formTimer.setRepeats(false);
-                    formTimer.start();
+                lbLoading.setVisible(true);
+                Timer formTimer = new Timer(2000, event -> {
+                    // Chuyển đến form chính sau 3 giây
+                    Main mn = new Main();
+                    mn.setVisible(true);
+                    this.dispose();
+                });
+                formTimer.setRepeats(false);
+                formTimer.start();
             }
 
         } else {
             msgBox.alertError(this, "Tên tài khoản hoặc mật khẩu không đúng");
         }
+    }
+
+    void openDangKy() {
+        lbLoading.setVisible(true);
+        Timer formTimer = new Timer(2000, event -> {
+            // Chuyển đến form chính sau 2 giây
+            Signup su = new Signup();
+            su.setVisible(true);
+            this.dispose();
+        });
+        formTimer.setRepeats(false);
+        formTimer.start();
     }
 
     @SuppressWarnings("unchecked")
@@ -146,6 +157,11 @@ public class LogIn extends javax.swing.JFrame {
         btnSignup.setFocusPainted(false);
         btnSignup.setFocusable(false);
         btnSignup.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnSignup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSignupActionPerformed(evt);
+            }
+        });
         panel1.add(btnSignup, new org.netbeans.lib.awtextra.AbsoluteConstraints(696, 457, 278, 44));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -208,6 +224,10 @@ public class LogIn extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         dangNhap();
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnSignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignupActionPerformed
+        openDangKy();
+    }//GEN-LAST:event_btnSignupActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -222,16 +242,24 @@ public class LogIn extends javax.swing.JFrame {
                 if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LogIn.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LogIn.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LogIn.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LogIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LogIn.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

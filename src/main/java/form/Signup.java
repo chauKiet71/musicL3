@@ -7,7 +7,9 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import entity.*;
 import javax.swing.BorderFactory;
+import javax.swing.Timer;
 import javax.swing.border.LineBorder;
+import main.Main;
 import uils.msgBox;
 
 public class Signup extends javax.swing.JFrame {
@@ -17,6 +19,7 @@ public class Signup extends javax.swing.JFrame {
     public Signup() {
         initComponents();
         init();
+        this.lbLoading.setVisible(false);
     }
     TaiKhoanDangKyDAO tkdao = new TaiKhoanDangKyDAO();
     NguoiDungDangKyDAO ngdao = new NguoiDungDangKyDAO();
@@ -39,19 +42,15 @@ public class Signup extends javax.swing.JFrame {
     }
 
     void openDangNhap() {
-        LogIn lg = new LogIn();
-        lg.setVisible(true);
-        this.dispose();
-    }
-
-    void dangKy() {
-        String hoTen = txtTen.getText();
-        String taiKhoan = txtTaiKhoan.getText();
-        String email = txtEmail.getText();
-        String matKhau = new String(txtPass.getPassword());
-        String xacNhanMK = new String(txtPassAgaint.getPassword());
-        TaiKhoan tk = tkdao.selectById(taiKhoan);
-        NguoiDung ng = ngdao.selectById(hoTen);
+        lbLoading.setVisible(true);
+        Timer formTimer = new Timer(2000, event -> {
+            // Chuyển đến form chính sau 2 giây
+            LogIn lg = new LogIn();
+            lg.setVisible(true);
+            this.dispose();
+        });
+        formTimer.setRepeats(false);
+        formTimer.start();
 
     }
 
@@ -115,7 +114,7 @@ public class Signup extends javax.swing.JFrame {
             msgBox.alertError(this, "Họ tên không được chứa kí tự số");
             txtTen.requestFocus();
             return false;
-        }else{
+        } else {
             txtTen.setBorder(null);
         }
         if (txtTaiKhoan.getText().contains(" ")) {
@@ -123,7 +122,7 @@ public class Signup extends javax.swing.JFrame {
             msgBox.alertError(this, "Tên tài khoản không được chứa khoản trắng");
             txtTaiKhoan.requestFocus();
             return false;
-        }else{
+        } else {
             txtTaiKhoan.setBorder(null);
         }
         if (txtTaiKhoan.getText().isEmpty()) {
@@ -131,7 +130,7 @@ public class Signup extends javax.swing.JFrame {
             msgBox.alertError(this, "Vui lòng nhập tên tài khoản");
             txtTen.requestFocus();
             return false;
-        }else{
+        } else {
             txtTaiKhoan.setBorder(null);
         }
         if (txtTaiKhoan.getText().length() <= 6) {
@@ -139,7 +138,7 @@ public class Signup extends javax.swing.JFrame {
             msgBox.alertError(this, "Tên tài khoản cần có ít nhất 6 kí tự");
             requestFocus();
             return false;
-        }else{
+        } else {
             txtTaiKhoan.setBorder(null);
         }
         if (txtEmail.getText().isEmpty()) {
@@ -147,7 +146,7 @@ public class Signup extends javax.swing.JFrame {
             msgBox.alertError(this, "Email không được để trống");
             txtEmail.requestFocus();
             return false;
-        }else{
+        } else {
             txtEmail.setBorder(null);
         }
         if (txtEmail.getText().contains(" ")) {
@@ -155,7 +154,7 @@ public class Signup extends javax.swing.JFrame {
             msgBox.alertError(this, "Email không dược chứa khoản trắng");
             txtEmail.requestFocus();
             return false;
-        }else{
+        } else {
             txtEmail.setBorder(null);
         }
         if (!txtEmail.getText().endsWith("@gmail.com")) {
@@ -163,14 +162,15 @@ public class Signup extends javax.swing.JFrame {
             msgBox.alertError(this, "Vui lòng nhập đúng định của email");
             txtEmail.requestFocus();
             return false;
-        }else{
+        } else {
             txtEmail.setBorder(null);
-        }if (pass.isEmpty()) {
+        }
+        if (pass.isEmpty()) {
             txtPass.setBorder(BorderFactory.createCompoundBorder(new LineBorder(color.red), BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-            msgBox.alertError(this, "Vui lòng nhập mật khẩu");  
+            msgBox.alertError(this, "Vui lòng nhập mật khẩu");
             txtPass.requestFocus();
             return false;
-        }else{
+        } else {
             txtPass.setBorder(null);
         }
         if (!pass.matches(".*\\d.*")) {
@@ -178,7 +178,7 @@ public class Signup extends javax.swing.JFrame {
             msgBox.alertError(this, "Mật khẩu của bạn cần có ít nhất 1 kí tự số");
             txtPass.requestFocus();
             return false;
-        }else{
+        } else {
             txtPass.setBorder(null);
         }
         if (!pass.matches(".*[A-Z].*")) {
@@ -186,7 +186,7 @@ public class Signup extends javax.swing.JFrame {
             msgBox.alertError(this, "Mật khẩu của bạn cần có ít nhất 1 kí tự in hoa");
             txtPass.requestFocus();
             return false;
-        }else{
+        } else {
             txtPass.setBorder(null);
         }
         if (!pass.matches(".*[!@#$%^&*()].*")) {
@@ -194,7 +194,7 @@ public class Signup extends javax.swing.JFrame {
             msgBox.alertError(this, "Mật khẩu của bạn cần có ít nhất 1 kí tự đặt biệt");
             txtPass.requestFocus();
             return false;
-        }else{
+        } else {
             txtPass.setBorder(null);
         }
         if (pass.length() <= 6) {
@@ -202,7 +202,7 @@ public class Signup extends javax.swing.JFrame {
             msgBox.alertError(this, "Mật khẩu của bạn cần có ít nhất 6 kí tự");
             txtPass.requestFocus();
             return false;
-        }else{
+        } else {
             txtPass.setBorder(null);
         }
         if (!pass.equals(confirmPass)) {
@@ -210,7 +210,7 @@ public class Signup extends javax.swing.JFrame {
             msgBox.alertError(this, "Xác nhận mật khẩu không đúng");
             txtPassAgaint.requestFocus();
             return false;
-        }else{
+        } else {
             txtPassAgaint.setBorder(null);
         }
         return true;
@@ -220,6 +220,7 @@ public class Signup extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lbLoading = new javax.swing.JLabel();
         panel1 = new swing.Panel();
         lbOut = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -238,6 +239,10 @@ public class Signup extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbLoading.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/loading.gif"))); // NOI18N
+        getContentPane().add(lbLoading, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 310, -1, -1));
 
         panel1.setBackground(new java.awt.Color(0, 0, 0));
         panel1.setOpaque(true);
@@ -351,16 +356,7 @@ public class Signup extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/signup.png"))); // NOI18N
         panel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 690));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
@@ -448,6 +444,7 @@ public class Signup extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel lbLoading;
     private javax.swing.JLabel lbOut;
     private swing.Panel panel1;
     private swing.MyTextField txtEmail;

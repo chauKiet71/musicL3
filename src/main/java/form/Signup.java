@@ -75,6 +75,7 @@ public class Signup extends javax.swing.JFrame {
         NguoiDung ng = new NguoiDung();
         ng.setHoTen(txtTen.getText());
         ng.setEmail(txtEmail.getText());
+        ng.setTenTK(txtTaiKhoan.getText());
         return ng;
     }
 
@@ -85,6 +86,8 @@ public class Signup extends javax.swing.JFrame {
             tkdao.insert(tk);
             ngdao.insert(ng);
             msgBox.alert(this, "Đăng ký thành công");
+            updateAnh upAnh = new updateAnh();
+            upAnh.setVisible(true);
         } catch (Exception e) {
             e.printStackTrace();
         }

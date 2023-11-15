@@ -14,6 +14,7 @@ import uils.XJdpc;
  */
 public class NguoiDungDangKyDAO extends MusicDAO<NguoiDung, String>{
     String INSERT = "INSERT INTO NguoiDung (HoTen, email, avatar, TenTK) VALUES (?, ?, ?, ?)";
+    String UPDATE = "UPDATE NguoiDung SET HoTen = ?, email = ?, avatar = ?, TenTK = ? WHERE MaND = ?";
     String SELECT_BY_ID = "SELECT * FROM NguoiDung WHERE HoTen = ?";
 
     @Override
@@ -23,7 +24,7 @@ public class NguoiDungDangKyDAO extends MusicDAO<NguoiDung, String>{
 
     @Override
     public void update(NguoiDung entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        XJdpc.update(UPDATE, entity.getHoTen(), entity.getEmail(), entity.getAvatar(), entity.getTenTK(), entity.getMaND());
     }
 
     @Override
